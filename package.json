@@ -7,8 +7,6 @@
   "scripts": {
     "postversion": "git push --follow-tags",
     "build": "webpack",
-    "doc": "docma -c docma.config.json",
-    "doc:serve": "docma serve out/ -c docma.config.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
