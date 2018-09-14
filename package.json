@@ -1,9 +1,13 @@
 {
   "name": "react-backdrop-filter",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "A lightweight backdrop filter component for react",
   "main": "dist/BackdropFilter.min.js",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tnargib/react-backdrop-filter.git"
+  },
   "scripts": {
     "postversion": "git push --follow-tags",
     "build": "webpack",
