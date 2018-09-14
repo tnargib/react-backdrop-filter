@@ -19,6 +19,8 @@ class BackdropFilter extends Component {
     new ResizeObserver(() => {
       this._draw();
     }).observe(this.backdrop.current);
+
+    window.onresize = this._draw;
   }
 
   componentDidUpdate() {
@@ -29,7 +31,7 @@ class BackdropFilter extends Component {
     let element = this.backdrop.current;
     let boundings = element.getBoundingClientRect();
     let beginDraw = new Date().getTime();
-
+    
     html2canvas(document.body, {
       width: boundings.width,
       height: boundings.height,
@@ -39,7 +41,7 @@ class BackdropFilter extends Component {
     }).then(canvas => {
       if (this.lastDraw > beginDraw) return;
       this.lastDraw = beginDraw;
-
+      
       element.querySelector(".rct-backdrop-canvas").innerHTML = "";
       element.querySelector(".rct-backdrop-canvas").appendChild(canvas);
       element.querySelector(
