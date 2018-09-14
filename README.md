@@ -52,6 +52,8 @@ render() {
 }
 ```
 
+[![Edit 13zvn71zz3](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/13zvn71zz3)
+
 # Props
 
 | prop name | type   | mandatory | default value |
