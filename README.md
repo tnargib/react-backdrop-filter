@@ -56,7 +56,15 @@ render() {
 
 # Props
 
-| prop name | type   | mandatory | default value |
-| --------- | ------ | --------- | ------------- |
-| filter    | string | NO        | ""            |
-| className | string | NO        | ""            |
+| prop name  | type     | mandatory | default value | description                                                         |
+| ---------- | -------- | --------- | ------------- | ------------------------------------------------------------------- |
+| filter     | string   | NO        | ""            |                                                                     |
+| className  | string   | NO        | ""            |                                                                     |
+| shouldDraw | function | NO        | null          | Should return true or false if the canvas should be rendered or not |
+| onDraw     | function | NO        | null          | Function called when canvas is rendered                             |
+| useCORS    | boolean  | NO        | false         |                                                                     |
+| proxy      | string   | NO        | null          |                                                                     |
+
+# Known Issues
+
+> This package uses [html2canvas](https://html2canvas.hertzen.com/) under the hood. Canvas are slow to calculate and render so `react-backdrop-filter` can't do well with animations and movement in the page. It is more recommended to use with static elements.
