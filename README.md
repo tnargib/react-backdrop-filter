@@ -56,14 +56,14 @@ render() {
 
 # Props
 
-| prop name  | type     | mandatory | default value | description                                                         |
-| ---------- | -------- | --------- | ------------- | ------------------------------------------------------------------- |
-| filter     | string   | NO        | ""            |                                                                     |
-| className  | string   | NO        | ""            |                                                                     |
-| shouldDraw | function | NO        | null          | Should return true or false if the canvas should be rendered or not |
-| onDraw     | function | NO        | null          | Function called when canvas is rendered                             |
-| useCORS    | boolean  | NO        | false         |                                                                     |
-| proxy      | string   | NO        | null          |                                                                     |
+| prop name  | type     | mandatory | default value | description                                                                                                 |
+| ---------- | -------- | --------- | ------------- | ----------------------------------------------------------------------------------------------------------- |
+| filter     | string   | NO        | ""            |                                                                                                             |
+| className  | string   | NO        | ""            |                                                                                                             |
+| shouldDraw | function | NO        | null          | Called every time the canvas is about to rerender. Should return true or false if it should continue or not |
+| onDraw     | function | NO        | null          | Function called when canvas is rendered                                                                     |
+| useCORS    | boolean  | NO        | false         |                                                                                                             |
+| proxy      | string   | NO        | null          |                                                                                                             |
 
 # Known Issues
 
