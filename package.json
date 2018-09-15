@@ -4,6 +4,13 @@
   "description": "A lightweight backdrop filter component for react",
   "main": "dist/BackdropFilter.min.js",
   "license": "MIT",
+  "keywords": [
+    "react",
+    "filter",
+    "backdrop",
+    "backdrop-filter",
+    "react-backdrop-filter"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tnargib/react-backdrop-filter.git"
