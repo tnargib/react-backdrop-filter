@@ -16,9 +16,13 @@ class BackdropFilter extends Component {
     backdrop = React.createRef();
 
     componentDidMount() {
-        new ResizeObserver(() => {
-            this._draw();
-        }).observe(this.backdrop.current);
+        let element = this.backdrop.current;
+        
+        if (element) {
+            new ResizeObserver(() => {
+                this._draw();
+            }).observe(element);
+        }
 
         window.onresize = this._draw;
     }
