@@ -1,6 +1,6 @@
 {
   "name": "react-backdrop-filter",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "A lightweight backdrop filter component for react",
   "main": "dist/BackdropFilter.min.js",
   "license": "MIT",
