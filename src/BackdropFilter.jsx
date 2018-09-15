@@ -31,6 +31,8 @@ class BackdropFilter extends Component {
         if (this.props.shouldDraw && !this.props.shouldDraw()) return;
 
         let element = this.backdrop.current;
+        if (!element) return;
+
         let boundings = element.getBoundingClientRect();
         let beginDraw = new Date().getTime();
 
