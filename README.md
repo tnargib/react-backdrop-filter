@@ -1,6 +1,6 @@
 # React Backdrop Filter
 
-react backdrop filter is an easy way of getting experimental backdrop filter to work with canvas.
+React Backdrop Filter is a quick and easy way of getting experimental backdrop filter to work with canvas.
 
 ![example](./example.png)
 

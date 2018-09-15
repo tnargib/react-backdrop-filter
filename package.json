@@ -1,7 +1,7 @@
 {
   "name": "react-backdrop-filter",
   "version": "1.2.2",
-  "description": "A lightweight backdrop filter component for react",
+  "description": "A quick and easy way of getting experimental backdrop filter to work with canvas.",
   "main": "dist/BackdropFilter.min.js",
   "license": "MIT",
   "keywords": [
