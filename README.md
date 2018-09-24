@@ -60,10 +60,11 @@ render() {
 | ---------- | -------- | --------- | ------------- | ----------------------------------------------------------------------------------------------------------- |
 | filter     | string   | NO        | ""            |                                                                                                             |
 | className  | string   | NO        | ""            |                                                                                                             |
+| logging    | bool     | NO        | false         | html2canvas configuration option                                                                            |
+| useCORS    | boolean  | NO        | false         | html2canvas configuration option                                                                            |
+| proxy      | string   | NO        | null          | html2canvas configuration option                                                                            |
 | shouldDraw | function | NO        | null          | Called every time the canvas is about to rerender. Should return true or false if it should continue or not |
 | onDraw     | function | NO        | null          | Function called when canvas is rendered                                                                     |
-| useCORS    | boolean  | NO        | false         |                                                                                                             |
-| proxy      | string   | NO        | null          |                                                                                                             |
 
 # Known Issues
 

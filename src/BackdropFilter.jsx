@@ -6,13 +6,6 @@ import ResizeObserver from "resize-observer-polyfill";
 import "./BackdropFilter.css";
 
 class BackdropFilter extends Component {
-    id = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
-        var r = (Math.random() * 16) | 0,
-            v = c === "x" ? r : (r & 0x3) | 0x8;
-        return v.toString(16);
-    });
-    lastDraw = 0;
-
     backdrop = React.createRef();
 
     componentDidMount() {
@@ -37,26 +30,23 @@ class BackdropFilter extends Component {
         let element = this.backdrop.current;
         if (!element) return;
 
-        let boundings = element.getBoundingClientRect();
-        let beginDraw = new Date().getTime();
+        let { width, height, x, y } = element.getBoundingClientRect();
+        let canvas = element.querySelector(".rct-backdrop-filter-canvas");
 
         html2canvas(document.body, {
-            width: boundings.width,
-            height: boundings.height,
-            x: boundings.x,
-            y: boundings.y,
+            logging: this.props.logging,
+            allowTaint: true,
+            width,
+            height,
+            x,
+            y,
             useCORS: this.props.useCORS,
             proxy: this.props.proxy,
-            ignoreElements: el => el.dataset.backdropId === this.id,
+            canvas,
         }).then(canvas => {
-            if (this.lastDraw > beginDraw) return;
-            this.lastDraw = beginDraw;
-
-            element.querySelector(".rct-backdrop-canvas").innerHTML = "";
-            element.querySelector(".rct-backdrop-canvas").appendChild(canvas);
-            element.querySelector(
-                ".rct-backdrop-canvas",
-            ).style.filter = this.props.filter;
+            let ctx = canvas.getContext("2d");
+            ctx.filter = this.props.filter;
+            ctx.drawImage(canvas, 0, 0);
 
             if (this.props.onDraw) this.props.onDraw();
         });
@@ -65,11 +55,11 @@ class BackdropFilter extends Component {
     render() {
         return (
             <div
-                data-backdrop-id={this.id}
-                className={"rct-backdrop-wrapper " + this.props.className}
+                data-html2canvas-ignore
+                className={"rct-backdrop-filter-wrapper " + this.props.className}
                 ref={this.backdrop}
             >
-                <div className="rct-backdrop-canvas" />
+                <canvas className="rct-backdrop-filter-canvas" />
                 {this.props.children}
             </div>
         );
@@ -80,15 +70,17 @@ BackdropFilter.propTypes = {
     children: PropTypes.element,
     className: PropTypes.string,
     filter: PropTypes.string,
-    shouldDraw: PropTypes.func,
-    onDraw: PropTypes.func,
+    logging: PropTypes.bool,
     useCORS: PropTypes.bool,
     proxy: PropTypes.string,
+    shouldDraw: PropTypes.func,
+    onDraw: PropTypes.func,
 };
 
 BackdropFilter.defaultProps = {
     className: "",
     filter: "",
+    logging: false,
     useCORS: false,
     proxy: null,
 };
