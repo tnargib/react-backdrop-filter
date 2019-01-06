@@ -10,7 +10,7 @@ class BackdropFilter extends Component {
 
     componentDidMount() {
         let element = this.backdrop.current;
-        
+
         if (element) {
             new ResizeObserver(() => {
                 this._draw();
@@ -24,8 +24,14 @@ class BackdropFilter extends Component {
         this._draw();
     }
 
+    shouldDraw = () => {
+        const { shouldDraw } = this.props;
+        if (typeof shouldDraw === "function") return shouldDraw();
+        return shouldDraw;
+    }
+
     _draw = () => {
-        if (this.props.shouldDraw && !this.props.shouldDraw()) return;
+        if (!this.shouldDraw()) return;
 
         let element = this.backdrop.current;
         if (!element) return;
@@ -73,7 +79,7 @@ BackdropFilter.propTypes = {
     logging: PropTypes.bool,
     useCORS: PropTypes.bool,
     proxy: PropTypes.string,
-    shouldDraw: PropTypes.func,
+    shouldDraw: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
     onDraw: PropTypes.func,
 };
 
@@ -83,6 +89,7 @@ BackdropFilter.defaultProps = {
     logging: false,
     useCORS: false,
     proxy: null,
+    shouldDraw: true,
 };
 
 export default BackdropFilter;
