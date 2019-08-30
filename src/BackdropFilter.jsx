@@ -6,90 +6,90 @@ import ResizeObserver from "resize-observer-polyfill";
 import "./BackdropFilter.css";
 
 class BackdropFilter extends Component {
-    backdrop = React.createRef();
+  backdrop = React.createRef();
 
-    componentDidMount() {
-        let element = this.backdrop.current;
+  componentDidMount() {
+    let element = this.backdrop.current;
 
-        if (element) {
-            new ResizeObserver(() => {
-                this._draw();
-            }).observe(element);
-        }
-
-        window.onresize = this._draw;
-    }
-
-    componentDidUpdate() {
+    if (element) {
+      new ResizeObserver(() => {
         this._draw();
+      }).observe(element);
     }
 
-    shouldDraw = () => {
-        const { shouldDraw } = this.props;
-        if (typeof shouldDraw === "function") return shouldDraw();
-        return shouldDraw;
-    }
+    window.onresize = this._draw;
+  }
 
-    _draw = () => {
-        if (!this.shouldDraw()) return;
+  componentDidUpdate() {
+    this._draw();
+  }
 
-        let element = this.backdrop.current;
-        if (!element) return;
+  shouldDraw = () => {
+    const { shouldDraw } = this.props;
+    if (typeof shouldDraw === "function") return shouldDraw();
+    return shouldDraw;
+  };
 
-        let { width, height, x, y } = element.getBoundingClientRect();
-        let canvas = element.querySelector(".rct-backdrop-filter-canvas");
+  _draw = () => {
+    if (!this.shouldDraw()) return;
 
-        html2canvas(document.body, {
-            logging: this.props.logging,
-            allowTaint: true,
-            width,
-            height,
-            x,
-            y,
-            useCORS: this.props.useCORS,
-            proxy: this.props.proxy,
-            canvas,
-        }).then(canvas => {
-            let ctx = canvas.getContext("2d");
-            ctx.filter = this.props.filter;
-            ctx.drawImage(canvas, 0, 0);
+    let element = this.backdrop.current;
+    if (!element) return;
 
-            if (this.props.onDraw) this.props.onDraw();
-        });
-    };
+    let { width, height, x, y } = element.getBoundingClientRect();
+    let canvas = element.querySelector(".rct-backdrop-filter-canvas");
 
-    render() {
-        return (
-            <div
-                data-html2canvas-ignore
-                className={"rct-backdrop-filter-wrapper " + this.props.className}
-                ref={this.backdrop}
-            >
-                <canvas className="rct-backdrop-filter-canvas" />
-                {this.props.children}
-            </div>
-        );
-    }
+    html2canvas(document.body, {
+      logging: this.props.logging,
+      allowTaint: true,
+      width,
+      height,
+      x,
+      y,
+      useCORS: this.props.useCORS,
+      proxy: this.props.proxy,
+      canvas
+    }).then(canvas => {
+      let ctx = canvas.getContext("2d");
+      ctx.filter = this.props.filter;
+      ctx.drawImage(canvas, 0, 0);
+
+      if (this.props.onDraw) this.props.onDraw();
+    });
+  };
+
+  render() {
+    return (
+      <div
+        data-html2canvas-ignore
+        className={"rct-backdrop-filter-wrapper " + this.props.className}
+        ref={this.backdrop}
+      >
+        <canvas className="rct-backdrop-filter-canvas" />
+        {this.props.children}
+      </div>
+    );
+  }
 }
 
 BackdropFilter.propTypes = {
-    children: PropTypes.element,
-    className: PropTypes.string,
-    filter: PropTypes.string,
-    logging: PropTypes.bool,
-    useCORS: PropTypes.bool,
-    proxy: PropTypes.string,
-    shouldDraw: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
-    onDraw: PropTypes.func,
+  children: PropTypes.element,
+  className: PropTypes.string,
+  filter: PropTypes.string,
+  logging: PropTypes.bool,
+  useCORS: PropTypes.bool,
+  proxy: PropTypes.string,
+  shouldDraw: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
+  onDraw: PropTypes.func
 };
 
 BackdropFilter.defaultProps = {
-    className: "",
-    filter: "",
-    logging: false,
-    useCORS: false,
-    proxy: null,
-    shouldDraw: true,
+  className: "",
+  filter: "",
+  logging: false,
+  useCORS: false,
+  proxy: null,
+  shouldDraw: true
 };
 
 export default BackdropFilter;

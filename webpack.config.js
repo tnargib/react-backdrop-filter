@@ -10,22 +10,20 @@ const config = {
           loader: "babel-loader",
           options: {
             presets: ["@babel/preset-env", "@babel/preset-react"],
-            plugins: [
-              require("@babel/plugin-proposal-class-properties"),
-            ],
-          },
-        },
+            plugins: [require("@babel/plugin-proposal-class-properties")]
+          }
+        }
       },
       {
         test: /\.css$/,
-        use: [ 'style-loader', 'css-loader' ],
-      },
-    ],
+        use: ["style-loader", "css-loader"]
+      }
+    ]
   },
   resolve: {
-    extensions: [".js", ".jsx"],
+    extensions: [".js", ".jsx"]
   },
-  plugins: [],
+  plugins: []
 };
 
 module.exports = [
@@ -36,12 +34,12 @@ module.exports = [
       filename: "BackdropFilter.js",
       library: "react-backdrop-filter",
       libraryTarget: "umd",
-      umdNamedDefine: true,
+      umdNamedDefine: true
     },
     mode: "development",
     module: config.module,
     resolve: config.resolve,
-    plugins: config.plugins,
+    plugins: config.plugins
   },
   {
     entry: path.resolve(__dirname, "src/BackdropFilter.jsx"),
@@ -50,11 +48,11 @@ module.exports = [
       filename: "BackdropFilter.min.js",
       library: "react-backdrop-filter",
       libraryTarget: "umd",
-      umdNamedDefine: true,
+      umdNamedDefine: true
     },
     mode: "production",
     module: config.module,
     resolve: config.resolve,
-    plugins: config.plugins,
-  },
+    plugins: config.plugins
+  }
 ];
