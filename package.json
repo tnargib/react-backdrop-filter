@@ -1,8 +1,12 @@
 {
   "name": "react-backdrop-filter",
-  "version": "1.3.2",
+  "version": "2.0.0",
   "description": "A quick and easy way of getting experimental backdrop filter to work with canvas.",
   "main": "dist/BackdropFilter.min.js",
+  "files": [
+    "dist/BackdropFilter.js",
+    "dist/BackdropFilter.min.js"
+  ],
   "license": "MIT",
   "keywords": [
     "react",
@@ -16,14 +20,13 @@
     "url": "git+https://github.com/tnargib/react-backdrop-filter.git"
   },
   "scripts": {
-    "postversion": "git push --follow-tags",
-    "build": "webpack",
+    "prepare": "rm -rf ./dist && npm run build",
+    "start": "webpack-dev-server --no-inline --config webpack.config.dev.js",
+    "build": "webpack --config webpack.config.prod.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "html2canvas": "^1.0.0-rc.3",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
+    "html2canvas": "1.0.0-alpha.12",
     "resize-observer-polyfill": "^1.5.1"
   },
   "devDependencies": {
@@ -36,9 +39,18 @@
     "css-loader": "^3.2.0",
     "eslint": "^6.3.0",
     "eslint-plugin-react": "^7.14.3",
-    "rimraf": "^3.0.0",
+    "file-loader": "^4.2.0",
+    "html-webpack-plugin": "^3.2.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "style-loader": "^1.0.0",
     "webpack": "^4.39.3",
-    "webpack-cli": "^3.3.7"
+    "webpack-cli": "^3.3.7",
+    "webpack-dev-server": "^3.8.0"
+  },
+  "peerDependencies": {
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
   }
 }
