@@ -4,11 +4,13 @@ React Backdrop Filter is a quick and easy way of getting experimental backdrop f
 
 ![example](./example.png)
 
-# Installation
+## Important note
 
-1. Install React Backdrop Filter as a dependency
+This package uses [html2canvas](https://html2canvas.hertzen.com/) under the hood. Canvas are slow to calculate and render so `react-backdrop-filter` can't do well with animations and movement in the page. It is more recommended to use with static elements.
 
-```
+## Installation
+
+```bash
 # Yarn
 $ yarn add react-backdrop-filter
 
@@ -16,16 +18,7 @@ $ yarn add react-backdrop-filter
 $ npm install react-backdrop-filter
 ```
 
-2. Import the `react-backdrop-filter` module
-
-```
-// ES6
-import BackdropFilter from "react-backdrop-filter";
-// ES5
-var BackdropFilter = require("react-backdrop-filter");
-```
-
-# Example
+## Usage
 
 ```javascript
 import BackdropFilter from "react-backdrop-filter";
@@ -35,9 +28,18 @@ render() {
         <div className="container">
             <BackdropFilter
                 className="bluredForm"
-                filter={"blur(8px) brightness(110%)"}
-            >
+                filter={"blur(10px) sepia(50%)"}
+                html2canvasOpts={{
+                    allowTaint: true
+                }}
+                onDraw={() => {
+                    console.log("Rendered !");
+                }}
+                >
                 <form>
+                    <div className="profilePic">
+                    <img src={drwho} alt="me" />
+                    </div>
                     <h4>@tnargib</h4>
                     <p>Login</p>
                     <hr />
@@ -54,18 +56,12 @@ render() {
 
 [![Edit 13zvn71zz3](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/13zvn71zz3)
 
-# Props
+## Configuration
 
-| prop name  | type     | mandatory | default value | description                                                                                                 |
-| ---------- | -------- | --------- | ------------- | ----------------------------------------------------------------------------------------------------------- |
-| filter     | string   | NO        | ""            |                                                                                                             |
-| className  | string   | NO        | ""            |                                                                                                             |
-| logging    | bool     | NO        | false         | html2canvas configuration option                                                                            |
-| useCORS    | boolean  | NO        | false         | html2canvas configuration option                                                                            |
-| proxy      | string   | NO        | null          | html2canvas configuration option                                                                            |
-| shouldDraw | function | NO        | null          | Called every time the canvas is about to rerender. Should return true or false if it should continue or not |
-| onDraw     | function | NO        | null          | Function called when canvas is rendered                                                                     |
-
-# Known Issues
-
-> This package uses [html2canvas](https://html2canvas.hertzen.com/) under the hood. Canvas are slow to calculate and render so `react-backdrop-filter` can't do well with animations and movement in the page. It is more recommended to use with static elements.
+| prop name       | type              | mandatory | default value | description                                                                                                 |
+| --------------- | ----------------- | --------- | ------------- | ----------------------------------------------------------------------------------------------------------- |
+| filter          | string            | NO        | ""            |                                                                                                             |
+| className       | string            | NO        | ""            |                                                                                                             |
+| shouldDraw      | function, boolean | NO        | true          | Called every time the canvas is about to rerender. Should return true or false if it should continue or not |
+| onDraw          | function          | NO        | null          | Function called when canvas is rendered                                                                     |
+| html2canvasOpts | object            | NO        | {}            | [html2canvas configuration options](http://html2canvas.hertzen.com/configuration)                           |

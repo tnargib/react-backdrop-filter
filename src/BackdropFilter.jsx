@@ -33,40 +33,40 @@ class BackdropFilter extends Component {
   _draw = () => {
     if (!this.shouldDraw()) return;
 
-    let element = this.backdrop.current;
+    const element = this.backdrop.current;
     if (!element) return;
 
-    let { width, height, x, y } = element.getBoundingClientRect();
-    let canvas = element.querySelector(".rct-backdrop-filter-canvas");
-
+    const { width, height, x, y } = element.getBoundingClientRect();
+    const canvas = element.querySelector(".rct-backdrop-filter-canvas");
+    
     html2canvas(document.body, {
-      logging: this.props.logging,
-      allowTaint: true,
+      ...this.props.html2canvasOpts,
       width,
       height,
       x,
       y,
-      useCORS: this.props.useCORS,
-      proxy: this.props.proxy,
-      canvas
-    }).then(canvas => {
+      canvas,
+    }).then(() => {
       let ctx = canvas.getContext("2d");
       ctx.filter = this.props.filter;
       ctx.drawImage(canvas, 0, 0);
 
-      if (this.props.onDraw) this.props.onDraw();
+      if (typeof this.props.onDraw === "function")
+        this.props.onDraw();
     });
   };
 
   render() {
+    const { className, children } = this.props;
+
     return (
       <div
         data-html2canvas-ignore
-        className={"rct-backdrop-filter-wrapper " + this.props.className}
         ref={this.backdrop}
+        className={"rct-backdrop-filter-wrapper " + className}
       >
         <canvas className="rct-backdrop-filter-canvas" />
-        {this.props.children}
+        {children}
       </div>
     );
   }
@@ -76,20 +76,16 @@ BackdropFilter.propTypes = {
   children: PropTypes.element,
   className: PropTypes.string,
   filter: PropTypes.string,
-  logging: PropTypes.bool,
-  useCORS: PropTypes.bool,
-  proxy: PropTypes.string,
   shouldDraw: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
-  onDraw: PropTypes.func
+  onDraw: PropTypes.func,
+  html2canvasOpts: PropTypes.object,
 };
 
 BackdropFilter.defaultProps = {
   className: "",
   filter: "",
-  logging: false,
-  useCORS: false,
-  proxy: null,
-  shouldDraw: true
+  shouldDraw: true,
+  html2canvasOpts: {}
 };
 
 export default BackdropFilter;

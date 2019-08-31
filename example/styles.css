@@ -1,0 +1,81 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat");
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  background-image: url(https://uploads.codesandbox.io/uploads/user/6dfa60b6-9433-40e5-b36d-9b8d2ad54c0c/zwoa-back3.jpg);
+  background-size: cover;
+  background-position: center;
+}
+
+html {
+  font-family: "Montserrat", sans-serif;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.bluredForm {
+  width: 350px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+.bluredForm > form {
+  text-align: center;
+  padding: 50px 50px 25px 50px;
+}
+
+.bluredForm .profilePic {
+  width: 125px;
+  height: 125px;
+  margin: auto;
+}
+.bluredForm .profilePic img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.bluredForm > form h4 {
+  margin: 0;
+  margin-top: 10px;
+  margin-bottom: 50px;
+}
+
+.bluredForm > form p {
+  text-align: left;
+  color: rgb(228, 228, 228);
+}
+
+.bluredForm > form .button {
+  padding: 15px;
+  color: white;
+  background-color: blueviolet;
+  border-radius: 15px;
+  width: 70%;
+  margin: auto;
+  margin-bottom: 10px;
+}
+
+.bluredForm > form hr {
+  height: 2px;
+  padding: 0;
+  color: black;
+  background-color: black;
+  border: 0;
+  margin-bottom: 60px;
+}
