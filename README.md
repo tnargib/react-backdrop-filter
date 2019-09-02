@@ -2,6 +2,10 @@
 
 React Backdrop Filter is a quick and easy way of getting experimental backdrop filter to work with canvas.
 
+[![npm](https://img.shields.io/npm/v/react-backdrop-filter.svg)](https://img.shields.io/npm/v/react-backdrop-filter)
+[![npm](https://img.shields.io/david/tnargib/react-backdrop-filter.svg)](https://img.shields.io/david/tnargib/react-backdrop-filter)
+[![npm](https://img.shields.io/npm/l/react-backdrop-filter.svg)](https://img.shields.io/npm/l/react-backdrop-filter)
+
 ![example](./example.png)
 
 ## Important note
