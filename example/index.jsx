@@ -13,7 +13,7 @@ class App extends React.Component {
       <div className="container">
         <BackdropFilter
           className="bluredForm"
-          filter={"blur(10px) sepia(50%)"}
+          filter={"blur(10px) sepia(20%)"}
           html2canvasOpts={{
             allowTaint: true
           }}

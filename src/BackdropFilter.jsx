@@ -6,28 +6,51 @@ import ResizeObserver from "resize-observer-polyfill";
 import "./BackdropFilter.css";
 
 class BackdropFilter extends Component {
+  cssSupport = CSS.supports(
+    "(backdrop-filter: blur(5px)) or (-webkit-backdrop-filter: blur(5px))"
+  );
+
   backdrop = React.createRef();
 
+  get isUsingCanvas() {
+    return !this.cssSupport && !!this.canvasFallback();
+  }
+
   componentDidMount() {
-    let element = this.backdrop.current;
+    this.log(
+      `CSS backdrop-filter is ${this.cssSupport ? "" : "not "}supported`
+    );
 
-    if (element) {
-      new ResizeObserver(() => {
-        this._draw();
-      }).observe(element);
+    if (this.isUsingCanvas) {
+      let element = this.backdrop.current;
+
+      if (element) {
+        new ResizeObserver(() => {
+          this._draw();
+        }).observe(element);
+      }
+
+      window.onresize = this._draw;
     }
-
-    window.onresize = this._draw;
   }
 
   componentDidUpdate() {
-    this._draw();
+    if (this.isUsingCanvas) this._draw();
   }
+
+  log = (...args) => {
+    if (this.props.logging) console.log(...args);
+  };
 
   shouldDraw = () => {
     const { shouldDraw } = this.props;
     if (typeof shouldDraw === "function") return shouldDraw();
     return shouldDraw;
+  };
+  canvasFallback = () => {
+    const { canvasFallback } = this.props;
+    if (typeof canvasFallback === "function") return canvasFallback();
+    return canvasFallback;
   };
 
   _draw = () => {
@@ -38,34 +61,44 @@ class BackdropFilter extends Component {
 
     const { width, height, x, y } = element.getBoundingClientRect();
     const canvas = element.querySelector(".rct-backdrop-filter-canvas");
-    
-    html2canvas(document.body, {
-      ...this.props.html2canvasOpts,
-      width,
-      height,
-      x,
-      y,
-      canvas,
-    }).then(() => {
-      let ctx = canvas.getContext("2d");
-      ctx.filter = this.props.filter;
-      ctx.drawImage(canvas, 0, 0);
 
-      if (typeof this.props.onDraw === "function")
-        this.props.onDraw();
-    });
+    // Wrap in setTimeout or first canvas won't render in Firefox
+    setTimeout(() =>
+      html2canvas(document.body, {
+        ...this.props.html2canvasOpts,
+        logging: this.props.logging,
+        width,
+        height,
+        x,
+        y,
+        canvas
+      }).then(() => {
+        if (typeof this.props.onDraw === "function") this.props.onDraw();
+      })
+    );
   };
 
   render() {
     const { className, children } = this.props;
+
+    const wrapperStyles = {
+      backdropFilter: this.props.filter,
+      WebkitBackdropFilter: this.props.filter
+    };
+    const canvasStyles = {
+      filter: this.props.filter
+    };
 
     return (
       <div
         data-html2canvas-ignore
         ref={this.backdrop}
         className={"rct-backdrop-filter-wrapper " + className}
+        style={this.cssSupport ? wrapperStyles : null}
       >
-        <canvas className="rct-backdrop-filter-canvas" />
+        {!this.cssSupport && (
+          <canvas className="rct-backdrop-filter-canvas" style={canvasStyles} />
+        )}
         {children}
       </div>
     );
@@ -73,19 +106,23 @@ class BackdropFilter extends Component {
 }
 
 BackdropFilter.propTypes = {
-  children: PropTypes.element,
+  children: PropTypes.node,
   className: PropTypes.string,
   filter: PropTypes.string,
+  canvasFallback: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
   shouldDraw: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
   onDraw: PropTypes.func,
   html2canvasOpts: PropTypes.object,
+  logging: PropTypes.bool
 };
 
 BackdropFilter.defaultProps = {
   className: "",
   filter: "",
+  canvasFallback: true,
   shouldDraw: true,
-  html2canvasOpts: {}
+  html2canvasOpts: {},
+  logging: true
 };
 
 export default BackdropFilter;
